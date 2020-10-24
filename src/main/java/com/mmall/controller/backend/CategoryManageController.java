@@ -37,7 +37,15 @@ public class CategoryManageController {
     @RequestMapping(value = "add_category.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<String> addCategory(HttpSession session,String categoryName ,@RequestParam(value = "parentId",defaultValue = "0") Integer parentId){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        ServerResponse errorResponse;
+        if ((errorResponse = BackendUtils.backendCheck(session,iUserService)).isSuccess()){
+            return iCategoryService.addCategory(categoryName,parentId);
+        }else {
+            return errorResponse;
+        }
+
+        /*        User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录");
         }
@@ -45,7 +53,7 @@ public class CategoryManageController {
         if(iUserService.checkAdmin(user).isSuccess()){//是管理员
             return iCategoryService.addCategory(categoryName,parentId);
         }
-        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");*/
 
     }
 
@@ -59,7 +67,18 @@ public class CategoryManageController {
     @RequestMapping(value = "set_category_name.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<String> setCategoryName(HttpSession session,String categoryName , Integer categoryId){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        ServerResponse errorResponse;
+        if ((errorResponse = BackendUtils.backendCheck(session,iUserService)).isSuccess()){
+            return iCategoryService.setCategoryName(categoryName,categoryId);
+        }else {
+            return errorResponse;
+        }
+
+
+
+
+        /*        User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录");
         }
@@ -68,7 +87,7 @@ public class CategoryManageController {
 
             return iCategoryService.setCategoryName(categoryName,categoryId);
         }
-        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");*/
     }
 
 
@@ -82,17 +101,24 @@ public class CategoryManageController {
     @ResponseBody
     public ServerResponse<List<Category>> getChildParallelCategory(@RequestParam(value = "categoryId",defaultValue = "0") Integer categoryId, HttpSession session){
 
-        User user = ((User)session.getAttribute(Const.CURRENT_USER));
+        ServerResponse errorResponse;
+        if ((errorResponse = BackendUtils.backendCheck(session,iUserService)).isSuccess()){
+            return iCategoryService.getChildParallelCategory(categoryId);
+        }else {
+            return errorResponse;
+        }
+
+
+/*        User user = ((User)session.getAttribute(Const.CURRENT_USER));
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,需要强制登录");
         }
-
         //校验是否是管理员
         if(iUserService.checkAdmin(user).isSuccess()){//是管理员
             //查询子节点的category信息，并且不递归，保持平级
             return iCategoryService.getChildParallelCategory(categoryId);
         }
-        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");*/
     }
 
 /*
@@ -123,22 +149,32 @@ public class CategoryManageController {
     }
 */
 
-
+    /**
+     * 获取当前分类id及递归子节点categoryId
+     * @param categoryId
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "get_deep_category.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<List<Integer>> getCategoryAndDeepChildrenCategory(@RequestParam(value = "categoryId",defaultValue = "0") Integer categoryId, HttpSession session){
+        ServerResponse errorResponse;
+        if ((errorResponse = BackendUtils.backendCheck(session,iUserService)).isSuccess()){
+            return iCategoryService.getCategoryAndDeepChildrenCategory(categoryId);
+        }else {
+            return errorResponse;
+        }
 
-        User user = ((User)session.getAttribute(Const.CURRENT_USER));
+/*        User user = ((User)session.getAttribute(Const.CURRENT_USER));
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,需要强制登录");
         }
-
         //校验是否是管理员
         if(iUserService.checkAdmin(user).isSuccess()){//是管理员
             //查询子节点的category信息，并且不递归，保持平级
             return iCategoryService.getCategoryAndDeepChildrenCategory(categoryId);
         }
-        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");*/
     }
 
 }
