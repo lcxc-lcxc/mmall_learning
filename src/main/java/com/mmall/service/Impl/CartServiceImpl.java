@@ -92,7 +92,7 @@ public class CartServiceImpl implements ICartService {
 
 
     /**
-     * 封装未cartVo，每个用户一个cartVo
+     * 封装为cartVo，每个用户一个cartVo
      * @param userId
      * @return
      */

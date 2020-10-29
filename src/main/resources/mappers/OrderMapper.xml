@@ -213,4 +213,28 @@
     from mmall_order
     where order_no = #{orderNo}
   </select>
+
+<!--
+  <select id="selectByUserIdAndShippingId" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    where user_id = #{userId}
+    and shipping_id = #{shippingId}
+  </select>-->
+
+  <select id="selectByUserId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    where user_id = #{userId}
+    order by create_time desc
+  </select>
+
+  <select id="selectAllOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    order by create_time desc
+  </select>
 </mapper>
