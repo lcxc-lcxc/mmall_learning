@@ -22,7 +22,7 @@ public class TokenCache {
             .newBuilder()
             .initialCapacity(1000)
             .maximumSize(10000)
-            .expireAfterAccess(12, TimeUnit.HOURS)
+            .expireAfterWrite(12, TimeUnit.HOURS)//被放进后12个小时后回收
             .build(new CacheLoader<String, String>() {
                 //默认的数据加载实现,当调用get取值时,如果key没有对应的值,就调用这个方法进行加载
                 @Override
