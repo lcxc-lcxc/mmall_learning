@@ -27,7 +27,7 @@ public class TokenCache {
                 //默认的数据加载实现,当调用get取值时,如果key没有对应的值,就调用这个方法进行加载
                 @Override
                 public String load(String key) throws Exception {
-                    return "null";
+                    return null;
                 }
             });
 
@@ -39,9 +39,6 @@ public class TokenCache {
         String value = null;
         try {
             value = localCache.get(key);
-            if ("null".equals(value)){
-                return null;
-            }
             return value;
         }catch (Exception e){
             logger.error("LocalCache get error",e);

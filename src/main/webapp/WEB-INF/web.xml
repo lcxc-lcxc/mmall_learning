@@ -25,12 +25,14 @@
 
 
     <listener>
-<!--        监听web容器启动和监听的事件-->
+<!--        RequestContextListener实现ServletRequestListener监听器接口,该监听器监听
+            HTTP请求事件,web服务器接收的每一次请求都会通知该监听器-->
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
 
     <listener>
-<!--        将servlet容器和spring镜像整合的监听器，也就是加载下面的applicationContext.xml-->
+<!--        将servlet容器和spring镜像整合的监听器，也就是加载下面的applicationContext.xml
+            只负责监听web容器启动和关闭的事件，监听web容器从而初始化IOC容器-->
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <context-param>
@@ -45,9 +47,6 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-
-
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>

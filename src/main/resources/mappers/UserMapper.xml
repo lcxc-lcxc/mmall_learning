@@ -165,6 +165,7 @@
 
 <!--  resultMap这类就是放在xml文件里面声明的对象（BaseResultMap在上面声明过），而resultType这类就是放java里面的对象-->
   <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+
     select
     <include refid="Base_Column_List" />
     from mmall_user

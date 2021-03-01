@@ -19,6 +19,7 @@ public interface UserMapper {
 
     int checkUsername(String username);
 
+    //传递多个参数，需要@Param注解
     User selectLogin(@Param("username") String username, @Param("password") String password);
 
     int checkEmail(String email);
